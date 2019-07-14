@@ -21,6 +21,7 @@ from azure.storage.blob import BlockBlobService
 from google.auth import exceptions
 from google.cloud import storage
 from minio import Minio
+import boto3
 
 _GCS_PREFIX = "gs://"
 _S3_PREFIX = "s3://"
@@ -61,15 +62,18 @@ class Storage(object): # pylint: disable=too-few-public-methods
 
     @staticmethod
     def _download_s3(uri, temp_dir: str):
-        client = Storage._create_minio_client()
+        s3 = boto3.resource('s3')
+        client = boto3.client('s3')
         bucket_args = uri.replace(_S3_PREFIX, "", 1).split("/", 1)
         bucket_name = bucket_args[0]
         bucket_path = bucket_args[1] if len(bucket_args) > 1 else ""
-        objects = client.list_objects(bucket_name, prefix=bucket_path, recursive=True)
-        for obj in objects:
+        bucket = s3.Bucket(name=bucket_name)
+        for obj in bucket.objects.filter(Prefix=bucket_path):
             # Replace any prefix from the object key with temp_dir
-            subdir_object_key = obj.object_name.replace(bucket_path, "", 1).strip("/")
-            client.fget_object(bucket_name, obj.object_name,
+            logging.info('Key:', obj.key)
+            subdir_object_key = obj.key.replace(bucket_path, "", 1).strip("/").split("/")
+            logging.info('Subdir object key:', subdir_object_key)
+            client.download_file(bucket_name, obj.key,
                                os.path.join(temp_dir, subdir_object_key))
 
     @staticmethod

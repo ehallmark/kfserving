@@ -28,7 +28,7 @@ var (
 		"latest",
 	}
 	InvalidSKLearnRuntimeVersionError = "RuntimeVersion must be one of " + strings.Join(AllowedSKLearnRuntimeVersions, ", ")
-	SKLearnServerImageName            = "gcr.io/kfserving/sklearnserver"
+	SKLearnServerImageName            = "docker.io/ehallmark1122/sklearnserver"
 	DefaultSKLearnRuntimeVersion      = "latest"
 )
 

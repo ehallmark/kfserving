@@ -27,7 +27,7 @@ import (
 const (
 	ModelInitializerContainerName    = "model-initializer"
 	ModelInitializerVolumeName       = "kfserving-provision-location"
-	ModelInitializerContainerImage   = "gcr.io/kfserving/model-initializer"
+	ModelInitializerContainerImage   = "docker.io/ehallmark1122/kfserving-model-initializer"
 	ModelInitializerContainerVersion = "latest"
 	PvcURIPrefix                     = "pvc://"
 	PvcSourceMountName               = "kfserving-pvc-source"

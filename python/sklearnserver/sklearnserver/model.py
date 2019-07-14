@@ -14,6 +14,7 @@
 
 import kfserving
 import joblib
+import pickle
 import numpy as np
 import os
 from typing import List
@@ -25,11 +26,17 @@ class SKLearnModel(kfserving.KFModel): #pylint:disable=c-extension-no-member
         super().__init__(name)
         self.name = name
         self.model_dir = model_dir
+        self.model_file = JOBLIB_FILE
         self.ready = False
 
     def load(self):
-        model_file = os.path.join(kfserving.Storage.download(self.model_dir), JOBLIB_FILE) #pylint:disable=c-extension-no-member
-        self._joblib = joblib.load(model_file) #pylint:disable=attribute-defined-outside-init
+        model_file = os.path.join(kfserving.Storage.download(self.model_dir), self.model_file) #pylint:disable=c-extension-no-member
+        try:
+            self._joblib = joblib.load(model_file) #pylint:disable=attribute-defined-outside-init
+        except:
+            logging.warn("Unable to deserialize with joblib... tyring pickle")
+            with open(model_file.replace('.joblib', '.pkl'), 'rb') as handle:
+                self._joblib = pickle.load(handle)
         self.ready = True
 
     def predict(self, body: List) -> List:

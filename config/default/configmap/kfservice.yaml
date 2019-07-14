@@ -10,7 +10,7 @@ data:
             "image": "tensorflow/serving"
         },
         "sklearn": {
-            "image": "gcr.io/kfserving/sklearnserver"
+            "image": "docker.io/ehallmark1122/kfserving-sklearnserver"
         },
         "xgboost": {
             "image": "gcr.io/kfserving/xgbserver"
