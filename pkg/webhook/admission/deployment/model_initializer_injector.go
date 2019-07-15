@@ -25,26 +25,15 @@ import (
 )
 
 const (
-<<<<<<< HEAD
-	ModelInitializerContainerName    = "model-initializer"
-	ModelInitializerVolumeName       = "kfserving-provision-location"
-	ModelInitializerContainerImage   = "docker.io/ehallmark1122/kfserving-model-initializer"
-	ModelInitializerContainerVersion = "latest"
-	PvcURIPrefix                     = "pvc://"
-	PvcSourceMountName               = "kfserving-pvc-source"
-	PvcSourceMountPath               = "/mnt/pvc"
-	UserContainerName                = "user-container"
-=======
 	ModelInitializerContainerName         = "model-initializer"
 	ModelInitializerConfigMapKeyName      = "modelInitializer"
 	ModelInitializerVolumeName            = "kfserving-provision-location"
-	ModelInitializerContainerImage        = "gcr.io/kfserving/model-initializer"
+	ModelInitializerContainerImage        = "docker.io/ehallmark1122/kfserving-model-initializer"
 	ModelInitializerContainerImageVersion = "latest"
 	PvcURIPrefix                          = "pvc://"
 	PvcSourceMountName                    = "kfserving-pvc-source"
 	PvcSourceMountPath                    = "/mnt/pvc"
 	UserContainerName                     = "user-container"
->>>>>>> 16c6c03b3cffa25cfd2909abc05ebbb7fbedaaca
 )
 
 type ModelInitializerConfig struct {
